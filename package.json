@@ -3,5 +3,5 @@
   "version": "0.0.0",
   "description": "Clean Architecture Shopping App",
   "author": "Daniel Soares <daniel.soares@me.com>",
-  "license": "ISC"
+  "license": "MIT"
 }
