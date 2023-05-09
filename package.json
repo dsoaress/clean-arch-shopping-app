@@ -3,5 +3,9 @@
   "version": "0.0.0",
   "description": "Clean Architecture Shopping App",
   "author": "Daniel Soares <daniel.soares@me.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "test": "pnpm --filter backend test",
+    "test:watch": "pnpm --filter backend test:watch"
+  }
 }

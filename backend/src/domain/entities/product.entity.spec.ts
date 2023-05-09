@@ -1,12 +1,9 @@
 import { ProductEntity } from "./product.entity";
 import { makeProductFactory } from "../../core/tests/factories/make-product.factory";
-import { makeStockFactory } from "../../core/tests/factories/make-stock.factory";
-import { StockEntity } from "./stock.entity";
 
 describe("ProductEntity", () => {
   it("should create a product entity", () => {
-    const stock = makeStockFactory();
-    const product = makeProductFactory({ stockId: stock.id, stock }).plainObject;
+    const product = makeProductFactory().plainObject;
     const productEntity = new ProductEntity(product);
     expect(productEntity.plainObject).toMatchObject({
       id: product.id,
@@ -14,15 +11,29 @@ describe("ProductEntity", () => {
       price: product.price,
       currency: product.currency,
       description: product.description,
-      image: product.image,
+      images: product.images,
+      variants: [
+        {
+          id: product.variants[0].id,
+          type: product.variants[0].type,
+          description: product.variants[0].description,
+          image: product.variants[0].image,
+          stockQuantity: product.variants[0].stockQuantity,
+        },
+      ],
       dimensions: {
         width: product.dimensions.width,
         height: product.dimensions.height,
         depth: product.dimensions.depth,
         length: product.dimensions.length,
       },
-      stockId: product.stockId,
     });
+  });
+
+  it("should throw an error if the id are invalid", () => {
+    expect(
+      () => new ProductEntity(makeProductFactory({ id: "invalid-id" }).plainObject)
+    ).toThrowError();
   });
 
   it("should throw an error if the product name is empty", () => {
@@ -47,7 +58,19 @@ describe("ProductEntity", () => {
 
   it("should throw an error if the product image are invalid", () => {
     expect(
-      () => new ProductEntity(makeProductFactory({ image: "invalid-image" }).plainObject)
+      () => new ProductEntity(makeProductFactory({ images: ["invalid-image"] }).plainObject)
+    ).toThrowError();
+  });
+
+  it("should throw an error if the product variants are invalid", () => {
+    expect(
+      () => new ProductEntity(makeProductFactory({ variants: undefined }).plainObject)
+    ).toThrowError();
+  });
+
+  it("should throw an error if the product variant does not exists", () => {
+    expect(
+      () => new ProductEntity(makeProductFactory({ variants: [] }).plainObject)
     ).toThrowError();
   });
 
@@ -59,12 +82,6 @@ describe("ProductEntity", () => {
             dimensions: { width: 0, height: 0, depth: 0, length: 0 },
           }).plainObject
         )
-    ).toThrowError();
-  });
-
-  it("should throw an error if the product stockId are invalid", () => {
-    expect(
-      () => new ProductEntity(makeProductFactory({ stockId: "invalid-id" }).plainObject)
     ).toThrowError();
   });
 });
