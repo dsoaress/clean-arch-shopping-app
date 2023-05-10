@@ -1,5 +1,3 @@
-import { randomUUID } from "node:crypto";
-
 import { ProductEntity, ProductEntityInputProps } from "../../../domain/entities/product.entity";
 import { makeProductVariantFactory } from "./make-product-variant";
 
