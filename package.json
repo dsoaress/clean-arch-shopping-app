@@ -5,7 +5,7 @@
   "author": "Daniel Soares <daniel.soares@me.com>",
   "license": "MIT",
   "scripts": {
-    "test": "pnpm --filter backend test",
-    "test:watch": "pnpm --filter backend test:watch"
+    "test:catalog": "pnpm --filter catalog test",
+    "test:catalog:watch": "pnpm --filter catalog test:watch"
   }
 }
